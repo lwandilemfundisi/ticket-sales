@@ -44,7 +44,9 @@ export default {
   },
   data: () => ({}),
   methods: {
-    addToBusket() {},
+    addToBusket() {
+      this.$router.push({ path: "/eventTicketBasket" });
+    },
     formattedDate(date) {
       return moment(date).format("yyyy-MM-DD");
     },

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import EventCatalog from '@/components/EventCatalog'
 import EventDetails from '@/components/EventDetails'
+import EventTicketBasket from '@/components/EventTicketBasket'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
             name: 'EventDetails',
             component: EventDetails,
             props: true
+        },
+        {
+            path: '/eventTicketBasket',
+            name: 'EventTicketBasket',
+            component: EventTicketBasket
         },
         {
             path: '*',
