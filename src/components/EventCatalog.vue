@@ -7,7 +7,9 @@
           <v-card-title v-text="n.eventName"></v-card-title>
           <v-card-subtitle v-text="n.artist"></v-card-subtitle>
           <v-card-actions>
-            <v-btn color="orange lighten-2" text> Details </v-btn>
+            <v-btn color="orange lighten-2" text @click="showDetails">
+              Details
+            </v-btn>
             <v-spacer></v-spacer>
             <v-btn icon @click="n.show = !n.show">
               <v-icon>{{
@@ -38,5 +40,10 @@ export default {
     },
   },
   data: () => ({}),
+  methods: {
+    showDetails() {
+      this.$router.push({ path: "/details" });
+    },
+  },
 };
 </script>
