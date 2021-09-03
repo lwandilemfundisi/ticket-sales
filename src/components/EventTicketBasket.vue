@@ -4,7 +4,7 @@
       item-key="name"
       class="elevation-1"
       v-bind:headers="headers"
-      v-bind:items="tickets"
+      v-bind:items="ticketLines"
       loading-text="Loading... Please wait"
     ></v-data-table>
   </v-container>
@@ -46,7 +46,7 @@ export default {
           value: "total",
         },
       ],
-      tickets: [
+      ticketLines: [
         {
           eventName: "To the Moon and Back",
           date: "2021/07/03",
