@@ -1,19 +1,33 @@
 <template>
-  <v-card class="mx-auto my-12" max-width="374">
+  <v-card :loading="isLoading" class="mx-auto my-12" max-width="374">
+    <template slot="progress">
+      <v-progress-linear
+        color="deep-purple"
+        height="10"
+        indeterminate
+      ></v-progress-linear>
+    </template>
     <div v-if="event">
       <v-img height="250" :src="event.imageUrl"></v-img>
       <v-card-title v-text="event.eventName">Cafe Badilico</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
-          <div class="grey--text" v-text="event.date"></div>
+          <div class="grey--text" v-text="formattedDate(event.date)"></div>
         </v-row>
         <div class="my-4 text-subtitle-1" v-text="event.eventPrice"></div>
         <div v-text="event.description"></div>
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6">
+            <v-text-field label="Quantity" clearable></v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
       <v-card-actions>
-        <v-btn color="deep-purple lighten-2" text @click="reserve">
-          Reserve
+        <v-btn color="deep-purple lighten-2" text @click="addToBusket">
+          Add To Busket
         </v-btn>
       </v-card-actions>
     </div>
@@ -21,6 +35,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   props: {
     id: {
@@ -29,7 +44,10 @@ export default {
   },
   data: () => ({}),
   methods: {
-    reserve() {},
+    addToBusket() {},
+    formattedDate(date) {
+      return moment(date).format("yyyy-MM-DD");
+    },
   },
   mounted() {
     this.$store.dispatch("getEvent", { id: this.$props.id });
@@ -37,6 +55,9 @@ export default {
   computed: {
     event() {
       return this.$store.getters.getEvent;
+    },
+    isLoading() {
+      return this.$store.getters.isLoading;
     },
   },
 };
