@@ -1,4 +1,3 @@
-import moment from "moment";
 import Vue from "vue";
 
 const state = {
@@ -12,14 +11,14 @@ const getters = {
 const actions = {
     async getEvents({ commit }, payload) {
         await Vue.axios.get('/event/getEvents')
-        .then((resp) =>{
-            let data = resp.data
-            if(data && data.events.length > 0){
-                payload.events = data.events
-                commit('setEventData', payload)
-            }
-            console.log(data)
-        })
+            .then((resp) => {
+                let data = resp.data
+                if (data && data.events.length > 0) {
+                    payload.events = data.events
+                    commit('setEventData', payload)
+                }
+                console.log(data)
+            })
     }
 }
 

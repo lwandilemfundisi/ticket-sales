@@ -7,7 +7,7 @@
           <v-card-title v-text="n.eventName"></v-card-title>
           <v-card-subtitle v-text="n.artist"></v-card-subtitle>
           <v-card-actions>
-            <v-btn color="orange lighten-2" text @click="showDetails">
+            <v-btn color="orange lighten-2" text @click="showDetails(n.id)">
               Details
             </v-btn>
             <v-spacer></v-spacer>
@@ -41,8 +41,8 @@ export default {
   },
   data: () => ({}),
   methods: {
-    showDetails() {
-      this.$router.push({ path: "/details" });
+    showDetails(id) {
+      this.$router.push({ path: "/details/" + id });
     },
   },
 };

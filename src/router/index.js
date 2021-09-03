@@ -13,9 +13,10 @@ export default new Router({
             component: EventCatalog
         },
         {
-            path: '/details',
+            path: '/details/:id',
             name: 'EventDetails',
-            component: EventDetails
+            component: EventDetails,
+            props: true
         },
         {
             path: '*',
