@@ -52,7 +52,7 @@ export default {
   methods: {
     addToBusket() {
       this.$store.dispatch("addBasketLine", {
-        basketId: this.$store.getters.getBasket.id,
+        basketId: this.$store.state.basket.id,
         eventId: this.$props.id,
         ticketAmount: this.quantity,
       });
@@ -60,19 +60,17 @@ export default {
     formattedDate(date) {
       return moment(date).format("yyyy-MM-DD");
     },
+    getBasketId() {
+      let basketId = null;
+      if (this.$store.state.basket) {
+        basketId = this.$store.state.basket.id;
+      }
+      return basketId;
+    },
   },
   mounted() {
     this.$store.dispatch("getEvent", { eventId: this.$props.id });
-
-    let basketId = null;
-
-    if(this.$store.getters.getBasktet){
-      basketId =this.$store.getters.getBasktet.id;
-    }
-
-    this.$store.dispatch("getBasket", {
-      basketId: basketId,
-    });
+    this.$store.dispatch("getBasket", { basketId: this.getBasketId() });
   },
   computed: {
     event() {
