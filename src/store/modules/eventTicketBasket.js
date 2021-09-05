@@ -10,13 +10,23 @@ const getters = {
 
 const actions = {
     async getTicketLines({ commit }, payload) {
-        
+        Vue.shoppingBasket.get('/shoppingBasketLines/getBasketLines', { params: payload })
+            .then((resp) => {
+                if (resp.data) {
+                    commit('setTicketLines', resp.data)
+                } else {
+                    console.log('could not find busket lines')
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 }
 
 const mutations = {
     setTicketLines(state, payload) {
-        state.ticketLines = payload.ticketLines
+        state.ticketLines = payload
     }
 }
 

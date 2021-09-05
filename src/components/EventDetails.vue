@@ -21,7 +21,11 @@
       <v-container>
         <v-row>
           <v-col cols="12" sm="6">
-            <v-text-field label="Quantity" clearable></v-text-field>
+            <v-text-field
+              label="Quantity"
+              clearable
+              v-model="quantity"
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-container>
@@ -42,17 +46,33 @@ export default {
       type: String,
     },
   },
-  data: () => ({}),
+  data: () => ({
+    quantity: 0,
+  }),
   methods: {
     addToBusket() {
-      this.$router.push({ path: "/eventTicketBasket" });
+      this.$store.dispatch("addBasketLine", {
+        basketId: this.$store.getters.getBasket.id,
+        eventId: this.$props.id,
+        ticketAmount: this.quantity,
+      });
     },
     formattedDate(date) {
       return moment(date).format("yyyy-MM-DD");
     },
   },
   mounted() {
-    this.$store.dispatch("getEvent", { id: this.$props.id });
+    this.$store.dispatch("getEvent", { eventId: this.$props.id });
+
+    let basketId = null;
+
+    if(this.$store.getters.getBasktet){
+      basketId =this.$store.getters.getBasktet.id;
+    }
+
+    this.$store.dispatch("getBasket", {
+      basketId: basketId,
+    });
   },
   computed: {
     event() {
@@ -60,6 +80,9 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isLoading;
+    },
+    basket() {
+      return this.$store.getters.getBasket;
     },
   },
 };

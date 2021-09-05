@@ -8,8 +8,12 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-Vue.axios = Vue.prototype.$http = axios.create({
+Vue.eventCatalog = Vue.prototype.$http = axios.create({
   baseURL: 'https://localhost:44338'
+})
+
+Vue.shoppingBasket = Vue.prototype.$http = axios.create({
+  baseURL: 'https://localhost:44316'
 })
 
 new Vue({

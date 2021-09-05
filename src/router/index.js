@@ -20,9 +20,10 @@ export default new Router({
             props: true
         },
         {
-            path: '/eventTicketBasket',
+            path: '/eventTicketBasket/:basketId',
             name: 'EventTicketBasket',
-            component: EventTicketBasket
+            component: EventTicketBasket,
+            props: true
         },
         {
             path: '*',

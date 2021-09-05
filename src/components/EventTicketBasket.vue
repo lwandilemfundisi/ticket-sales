@@ -12,6 +12,19 @@
 
 <script>
 export default {
+  props: {
+    basketId: {
+      type: String,
+    },
+  },
+  created() {
+    this.$store.dispatch("getTicketLines", { basketId: this.$props.basketId });
+  },
+  computed: {
+    ticketLines() {
+      return this.$store.getters.getTicketLines;
+    },
+  },
   data() {
     return {
       headers: [
@@ -44,15 +57,6 @@ export default {
           align: "left",
           sortable: false,
           value: "total",
-        },
-      ],
-      ticketLines: [
-        {
-          eventName: "To the Moon and Back",
-          date: "2021/07/03",
-          ticketPrice: "R135",
-          quantity: "1",
-          total: "R135",
         },
       ],
     };
