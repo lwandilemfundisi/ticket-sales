@@ -65,7 +65,6 @@ export default {
       if (this.$store.state.basket.basket) {
         basketId = this.$store.state.basket.basket.id;
       }
-      console.log(basketId)
       return basketId;
     },
   },
