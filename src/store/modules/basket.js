@@ -15,7 +15,11 @@ const actions = {
                 }
             })
             .catch((err) => {
-                console.log(err)
+                if(err.response){
+                    Vue.$log.error(err.response.data)
+                }else{
+                    Vue.$log.error(err)
+                }
             })
     },
 
@@ -29,7 +33,11 @@ const actions = {
                 }
             })
             .catch((err) => {
-                console.log(err)
+                if(err.response){
+                    Vue.$log.error(err.response.data)
+                }else{
+                    Vue.$log.error(err)
+                }
             })
     }
 }

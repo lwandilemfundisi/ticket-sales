@@ -21,8 +21,12 @@ const actions = {
                 state.loading = false;
             })
             .catch((err) => {
-                console.log(err)
                 state.loading = false;
+                if(err.response){
+                    Vue.$log.error(err.response.data)
+                }else{
+                    Vue.$log.error(err)
+                }
             })
     },
 
@@ -33,7 +37,11 @@ const actions = {
                 console.log(commit)
             })
             .catch((err) => {
-                console.log(err)
+                if(err.response){
+                    Vue.$log.error(err.response.data)
+                }else{
+                    Vue.$log.error(err)
+                }
             })
     }
 }
