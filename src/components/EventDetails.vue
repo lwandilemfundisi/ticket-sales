@@ -47,7 +47,6 @@ export default {
     },
   },
   data: () => ({
-    price: 0,
     quantity: 0,
   }),
   methods: {
@@ -56,6 +55,7 @@ export default {
         basketId: this.getBasketId(),
         eventId: this.$props.id,
         ticketAmount: this.quantity,
+        price: this.event.eventPrice
       });
     },
     formattedDate(date) {
