@@ -18,6 +18,9 @@ const actions = {
                     commit('setEventData', payload)
                 }
             })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 }
 

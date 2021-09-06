@@ -20,6 +20,10 @@ const actions = {
                 commit('setEventData', payload)
                 state.loading = false;
             })
+            .catch((err) => {
+                console.log(err)
+                state.loading = false;
+            })
     },
 
     addBasketLine({ commit }, payload) {
