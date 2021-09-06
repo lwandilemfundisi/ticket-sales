@@ -52,7 +52,7 @@ export default {
   methods: {
     addToBusket() {
       this.$store.dispatch("addBasketLine", {
-        basketId: this.$store.state.basket.id,
+        basketId: this.getBasketId(),
         eventId: this.$props.id,
         ticketAmount: this.quantity,
       });
@@ -62,9 +62,10 @@ export default {
     },
     getBasketId() {
       let basketId = null;
-      if (this.$store.state.basket) {
-        basketId = this.$store.state.basket.id;
+      if (this.$store.state.basket.basket) {
+        basketId = this.$store.state.basket.basket.id;
       }
+      console.log(basketId)
       return basketId;
     },
   },

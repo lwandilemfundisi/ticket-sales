@@ -5,6 +5,7 @@
       class="elevation-1"
       v-bind:headers="headers"
       v-bind:items="ticketLines"
+      :loading = isLoadingTicketLines
       loading-text="Loading... Please wait"
     ></v-data-table>
   </v-container>
@@ -24,6 +25,9 @@ export default {
     ticketLines() {
       return this.$store.getters.getTicketLines;
     },
+    isLoadingTicketLines(){
+      return this.$store.getters.isLoadingTicketLines
+    }
   },
   data() {
     return {

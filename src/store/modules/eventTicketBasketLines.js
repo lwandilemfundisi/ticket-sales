@@ -1,17 +1,21 @@
 import Vue from "vue";
 
 const state = {
-    ticketLines: []
+    ticketLines: [],
+    LoadingTicketLines: false
 }
 
 const getters = {
-    getTicketLines: state => state.ticketLines
+    getTicketLines: state => state.ticketLines,
+    isLoadingTicketLines: state => state.LoadingTicketLines
 }
 
 const actions = {
-    async getTicketLines({ commit }, payload) {
+    async getTicketLines({ commit, state }, payload) {
+        state.LoadingTicketLines = true
         Vue.shoppingBasket.get('/shoppingBasketLines/getBasketLines', { params: payload })
             .then((resp) => {
+                state.LoadingTicketLines = false
                 if (resp.data) {
                     commit('setTicketLines', resp.data)
                 } else {
@@ -19,6 +23,7 @@ const actions = {
                 }
             })
             .catch((err) => {
+                state.LoadingTicketLines = false
                 console.log(err)
             })
     }
