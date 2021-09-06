@@ -4,9 +4,9 @@
       item-key="name"
       class="elevation-1"
       v-bind:headers="headers"
-      v-bind:items="ticketLines"
-      :loading = isLoadingTicketLines
-      loading-text="Loading... Please wait"
+      v-bind:items="basketLines"
+      :loading = isLoadingBasketLines
+      loading-text="Loading basket lines... Please wait"
     ></v-data-table>
   </v-container>
 </template>
@@ -19,14 +19,14 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getTicketLines", { basketId: this.$props.basketId });
+    this.$store.dispatch("getBasketLines", { basketId: this.$props.basketId });
   },
   computed: {
-    ticketLines() {
-      return this.$store.getters.getTicketLines;
+    basketLines() {
+      return this.$store.getters.getBasketLines;
     },
-    isLoadingTicketLines(){
-      return this.$store.getters.isLoadingTicketLines
+    isLoadingBasketLines(){
+      return this.$store.getters.isLoadingBasketLines
     }
   },
   data() {

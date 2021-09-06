@@ -29,7 +29,7 @@ const actions = {
     addBasketLine({ commit }, payload) {
         Vue.shoppingBasket.post('/shoppingBasketLines/addBasketLine', payload)
             .then(() => {
-                router.push({ path: "/eventTicketBasket/" + payload.basketId})
+                router.push({ path: "/basketLines/" + payload.basketId})
                 console.log(commit)
             })
             .catch((err) => {

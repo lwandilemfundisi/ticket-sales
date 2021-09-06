@@ -47,6 +47,7 @@ export default {
     },
   },
   data: () => ({
+    price: 0,
     quantity: 0,
   }),
   methods: {

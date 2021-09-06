@@ -5,7 +5,7 @@ import createPersistedState from 'vuex-persistedstate'
 import basket from './modules/basket'
 import eventDetail from './modules/eventDetail'
 import eventCatalog from './modules/eventCatalog'
-import eventTicketBasketLines from './modules/eventTicketBasketLines'
+import basketLines from './modules/basketLines'
 
 Vue.use(Vuex)
 
@@ -13,7 +13,7 @@ export default new Vuex.Store({
     modules: {
         eventCatalog,
         eventDetail,
-        eventTicketBasketLines,
+        basketLines,
         basket
     },
     plugins: [createPersistedState({
