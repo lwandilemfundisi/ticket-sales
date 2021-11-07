@@ -138,7 +138,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { required, email, max, min } from "vee-validate/dist/rules";
 import {
   extend,
@@ -193,22 +192,9 @@ export default {
   methods: {
     onSubmit() {
       this.$refs.observer.validate();
-      
-      this.$data.basketId = this.$store.state.basket.basket.id
-      console.log(this.$data)
 
-      Vue.shoppingBasket
-        .post("/shoppingBasket/checkout", this.$data)
-        .then((resp) => {
-          console.log(resp);
-        })
-        .catch((err) => {
-          if (err.response) {
-            Vue.$log.error(err.response.data);
-          } else {
-            Vue.$log.error(err);
-          }
-        });
+      this.$data.basketId = this.$store.state.basket.basket.id
+      this.$store.dispatch("checkout", this.$data);
     },
     clear() {
       this.firstname = "";

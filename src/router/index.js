@@ -4,6 +4,7 @@ import EventCatalog from '@/components/EventCatalog'
 import EventDetails from '@/components/EventDetails'
 import BasketLines from '@/components/BasketLines'
 import Checkout from '@/components/Checkout'
+import CheckoutComplete from '@/components/CheckoutComplete'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
             path: '/checkout',
             name: 'Checkout',
             component: Checkout
+        },
+        {
+            path: '/checkoutComplete',
+            name: 'CheckoutComplete',
+            component: CheckoutComplete
         },
         {
             path: '*',
