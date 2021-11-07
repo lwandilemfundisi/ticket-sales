@@ -29,7 +29,7 @@ const actions = {
                 if (resp.data) {
                     commit('setBasket', resp.data)
                 } else {
-                    dispatch('createBasket', { userId: 'DummyUser' })
+                    dispatch('createBasket', { userId: '05c209ba-65fc-4397-9c16-6345ed436ada' })
                 }
             })
             .catch((err) => {

@@ -1,15 +1,14 @@
 <template>
   <v-container>
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="onSubmit">
         <validation-provider
           v-slot="{ errors }"
           name="FirstName"
-          rules="required|max:10"
+          rules="required"
         >
           <v-text-field
             v-model="firstname"
-            :counter="10"
             :error-messages="errors"
             label="First Name"
             required
@@ -18,11 +17,10 @@
         <validation-provider
           v-slot="{ errors }"
           name="LastName"
-          rules="required|max:10"
+          rules="required"
         >
           <v-text-field
             v-model="lastname"
-            :counter="10"
             :error-messages="errors"
             label="Last Name"
             required
@@ -43,11 +41,10 @@
         <validation-provider
           v-slot="{ errors }"
           name="Address"
-          rules="required|max:10"
+          rules="required"
         >
           <v-text-field
             v-model="address"
-            :counter="10"
             :error-messages="errors"
             label="Address"
             required
@@ -56,24 +53,18 @@
         <validation-provider
           v-slot="{ errors }"
           name="ZipCode"
-          rules="required|max:10"
+          rules="required"
         >
           <v-text-field
             v-model="zipCode"
-            :counter="10"
             :error-messages="errors"
             label="Zip Code"
             required
           ></v-text-field>
         </validation-provider>
-        <validation-provider
-          v-slot="{ errors }"
-          name="City"
-          rules="required|max:10"
-        >
+        <validation-provider v-slot="{ errors }" name="City" rules="required">
           <v-text-field
             v-model="city"
-            :counter="10"
             :error-messages="errors"
             label="City"
             required
@@ -82,11 +73,10 @@
         <validation-provider
           v-slot="{ errors }"
           name="Country"
-          rules="required|max:10"
+          rules="required"
         >
           <v-text-field
             v-model="country"
-            :counter="10"
             :error-messages="errors"
             label="Country"
             required
@@ -94,51 +84,47 @@
         </validation-provider>
         <validation-provider
           v-slot="{ errors }"
-          name="CreditCardNumber"
-          rules="required|max:10"
+          name="CardNumber"
+          rules="required"
         >
           <v-text-field
-            v-model="creditCardNumber"
-            :counter="10"
+            v-model="cardNumber"
             :error-messages="errors"
-            label="Credit Card Number"
+            label="Card Number"
             required
           ></v-text-field>
         </validation-provider>
         <validation-provider
           v-slot="{ errors }"
-          name="CreditCardName"
-          rules="required|max:10"
+          name="CardName"
+          rules="required"
         >
           <v-text-field
-            v-model="creditCardName"
-            :counter="10"
+            v-model="cardName"
             :error-messages="errors"
-            label="Credit Card Name"
+            label="Card Name"
             required
           ></v-text-field>
         </validation-provider>
         <validation-provider
           v-slot="{ errors }"
           name="CardExpiration"
-          rules="required|max:10"
+          rules="required"
         >
           <v-text-field
             v-model="cardExpiration"
-            :counter="10"
             :error-messages="errors"
-            label="Credit Card Expiration"
+            label="Card Expiration"
             required
           ></v-text-field>
         </validation-provider>
         <validation-provider
           v-slot="{ errors }"
           name="CvvCode"
-          rules="required|max:3"
+          rules="required|max:3|min:3"
         >
           <v-text-field
             v-model="cvvCode"
-            :counter="3"
             :error-messages="errors"
             label="Cvv Code"
             required
@@ -152,7 +138,8 @@
 </template>
 
 <script>
-import { required, email, max } from "vee-validate/dist/rules";
+import Vue from "vue";
+import { required, email, max, min } from "vee-validate/dist/rules";
 import {
   extend,
   ValidationObserver,
@@ -165,6 +152,11 @@ setInteractionMode("eager");
 extend("required", {
   ...required,
   message: "{_field_} can not be empty",
+});
+
+extend("min", {
+  ...min,
+  message: "{_field_} may not be less than {length} characters",
 });
 
 extend("max", {
@@ -183,6 +175,8 @@ export default {
     ValidationObserver,
   },
   data: () => ({
+    userId: "05c209ba-65fc-4397-9c16-6345ed436ada",
+    basketId: "",
     firstname: "",
     lastname: "",
     email: "",
@@ -190,15 +184,31 @@ export default {
     zipCode: "",
     city: "",
     country: "",
-    creditCardNumber: "",
-    creditCardName: "",
+    cardNumber: "",
+    cardName: "",
     cardExpiration: "",
     cvvCode: "",
   }),
 
   methods: {
-    submit() {
+    onSubmit() {
       this.$refs.observer.validate();
+      
+      this.$data.basketId = this.$store.state.basket.basket.id
+      console.log(this.$data)
+
+      Vue.shoppingBasket
+        .post("/shoppingBasket/checkout", this.$data)
+        .then((resp) => {
+          console.log(resp);
+        })
+        .catch((err) => {
+          if (err.response) {
+            Vue.$log.error(err.response.data);
+          } else {
+            Vue.$log.error(err);
+          }
+        });
     },
     clear() {
       this.firstname = "";
@@ -208,8 +218,8 @@ export default {
       this.zipCode = "";
       this.city = "";
       this.country = "";
-      this.creditCardNumber = "";
-      this.creditCardName = "";
+      this.cardNumber = "";
+      this.cardName = "";
       this.cardExpiration = "";
       this.cvvCode = "";
       this.$refs.observer.reset();
