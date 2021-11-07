@@ -5,6 +5,10 @@ const state = {
 }
 
 const actions = {
+    clearBasket({commit}){
+        commit('setBasket', null)
+    },
+
     createBasket({ commit }, payload) {
         Vue.shoppingBasket.post('/shoppingBasket/createBasket', payload)
             .then((resp) => {

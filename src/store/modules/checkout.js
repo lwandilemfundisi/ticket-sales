@@ -7,14 +7,14 @@ const state = {
 
 const actions = {
 
-    async checkout({ commit }, payload) {
+    async checkout({ commit, dispatch }, payload) {
         commit('setCheckoutStatus', true)
         Vue.shoppingBasket
             .post("/shoppingBasket/checkout", payload)
-            .then((resp) => {
+            .then(() => {
                 commit('setCheckoutStatus', false)
+                dispatch('clearBasket')
                 router.push({ path: "/checkoutComplete" })
-                console.log(resp);
             })
             .catch((err) => {
                 commit('setCheckoutStatus', false)
