@@ -9,7 +9,7 @@
     </template>
     <div v-if="event">
       <v-img height="250" :src="event.imageUrl"></v-img>
-      <v-card-title v-text="event.eventName">Cafe Badilico</v-card-title>
+      <v-card-title v-text="event.eventName"></v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
           <div class="grey--text" v-text="formattedDate(event.date)"></div>

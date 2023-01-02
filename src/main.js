@@ -18,6 +18,10 @@ Vue.shoppingBasket = Vue.prototype.$http = axios.create({
   baseURL: 'https://localhost:44316'
 })
 
+Vue.order = Vue.prototype.$http = axios.create({
+  baseURL: 'https://localhost:44366'
+})
+
 Vue.use(VueLogger, {
     isEnabled: true,
     logLevel: isProduction ? 'error' : 'debug',

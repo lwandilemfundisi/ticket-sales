@@ -7,6 +7,7 @@ import eventDetail from './modules/eventDetail'
 import eventCatalog from './modules/eventCatalog'
 import basketLines from './modules/basketLines'
 import checkout from './modules/checkout'
+import order from './modules/orderDetails'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         eventDetail,
         basketLines,
         basket,
-        checkout
+        checkout,
+        order
     },
     plugins: [createPersistedState({
         paths: ['basket']
