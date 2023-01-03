@@ -58,7 +58,7 @@ export default {
     },
     goToShoppingBasket() {
       this.$router.push({
-        path: "/basketLines/" + this.$store.getters.getBasket.basketId,
+        path: "/basketLines/" + this.$store.getters.getBasket.id,
       });
     },
   },
