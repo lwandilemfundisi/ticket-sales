@@ -174,7 +174,7 @@ export default {
     ValidationObserver,
   },
   data: () => ({
-    userId: "05c209ba-65fc-4397-9c16-6345ed436ada",
+    userId: "",
     basketId: "",
     firstname: "",
     lastname: "",
@@ -193,6 +193,7 @@ export default {
     onSubmit() {
       this.$refs.observer.validate();
 
+      this.$data.userId = this.$store.getters.getUserId
       this.$data.basketId = this.$store.state.basket.basket.id
       this.$store.dispatch("checkout", this.$data);
     },

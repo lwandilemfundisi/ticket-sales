@@ -27,13 +27,13 @@ const actions = {
             })
     },
 
-    getBasket({ commit, dispatch }, payload) {
+    getBasket({ commit, dispatch, getters }, payload) {
         Vue.shoppingBasket.get('/shoppingBasket/getBasket', { params: payload })
             .then((resp) => {
                 if (resp.data) {
                     commit('setBasket', resp.data)
                 } else {
-                    dispatch('createBasket', { userId: '05c209ba-65fc-4397-9c16-6345ed436ada' })
+                    dispatch('createBasket', { userId: getters.getUserId })
                 }
             })
             .catch((err) => {

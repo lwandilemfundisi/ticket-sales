@@ -16,7 +16,7 @@ export default {
   methods: {
     goToOrders() {
       this.$router.push({
-        path: "/orders/05c209ba-65fc-4397-9c16-6345ed436ada",
+        path: "/orders/" + this.$store.getters.getUserId,
       });
     },
     goBackToEventCatalog() {
