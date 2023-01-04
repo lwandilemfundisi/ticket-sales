@@ -217,7 +217,7 @@
                 <v-btn
                   type="submit"
                   color="primary"
-                  @click="e1 = 1"
+                  @click="submitOrder"
                   :disabled="invalid"
                 >
                   Continue
@@ -228,6 +228,12 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+    <v-overlay :value="isLoading">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -281,9 +287,14 @@ export default {
     cardName: "",
     cardExpiration: "",
     cvvCode: "",
-    e1: 1,
+    e1: 1
   }),
-
+  
+  computed: {
+    isLoading() {
+      return this.$store.getters.isBusyCheckingOut;
+    },
+  },
   methods: {
     validatePersonalDetails() {
       this.$refs.observePersonalDetails.validate();
