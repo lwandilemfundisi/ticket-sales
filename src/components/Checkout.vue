@@ -1,24 +1,31 @@
 <template>
   <v-container>
     <v-stepper v-model="e1">
-      <validation-observer ref="observer">
-        <form @submit.prevent="onSubmit">
-          <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1">
-              Personal Details
-            </v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 2" step="2">
-              Address Details
-            </v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step step="3">Banking Details</v-stepper-step>
-          </v-stepper-header>
-          <v-stepper-items>
-            <v-stepper-content step="1" style="height: auto">
-              <v-card class="mb-12" outlined style="margin: 0px auto; text-align: center; width:630px">
+      <v-stepper-header>
+        <v-stepper-step :complete="e1 > 1" step="1">
+          Personal Details
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step :complete="e1 > 2" step="2">
+          Address Details
+        </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="3">Banking Details</v-stepper-step>
+      </v-stepper-header>
+      <v-stepper-items>
+        <v-stepper-content step="1" style="height: auto">
+          <v-card
+            class="mb-12"
+            outlined
+            style="margin: 0px auto; text-align: center; width: 630px"
+          >
+            <validation-observer
+              ref="observePersonalDetails"
+              v-slot="{ invalid }"
+            >
+              <form @submit.prevent="validatePersonalDetails">
                 <v-card-text>
-                    <validation-provider
+                  <validation-provider
                     v-slot="{ errors }"
                     name="FirstName"
                     rules="required"
@@ -56,14 +63,31 @@
                   </validation-provider>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn color="primary" @click="e1 = 2"> Continue </v-btn>
-                  <v-btn text> Cancel </v-btn>
+                  <v-btn
+                    type="submit"
+                    color="primary"
+                    @click="e1 = 2"
+                    :disabled="invalid"
+                  >
+                    Continue
+                  </v-btn>
                 </v-card-actions>
-              </v-card>
-            </v-stepper-content>
-            <v-stepper-content step="2" style="height: auto">
-              <v-card class="mb-12" outlined style="margin: 0px auto; text-align: center; width:630px">
-                <v-card-text>
+              </form>
+            </validation-observer>
+          </v-card>
+        </v-stepper-content>
+        <v-stepper-content step="2" style="height: auto">
+          <v-card
+            class="mb-12"
+            outlined
+            style="margin: 0px auto; text-align: center; width: 630px"
+          >
+            <validation-observer
+              ref="observeAddressDetails"
+              v-slot="{ invalid }"
+            >
+              <v-card-text>
+                <form @submit.prevent="validateAddressDetails">
                   <validation-provider
                     v-slot="{ errors }"
                     name="Address"
@@ -112,16 +136,33 @@
                       required
                     ></v-text-field>
                   </validation-provider>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
-                  <v-btn text> Cancel </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-stepper-content>
-            <v-stepper-content step="3" style="height: auto">
-              <v-card class="mb-12" outlined style="margin: 0px auto; text-align: center; width:630px">
-                <v-card-text>
+                </form>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn
+                  type="submit"
+                  color="primary"
+                  @click="e1 = 3"
+                  :disabled="invalid"
+                >
+                  Continue
+                </v-btn>
+              </v-card-actions>
+            </validation-observer>
+          </v-card>
+        </v-stepper-content>
+        <v-stepper-content step="3" style="height: auto">
+          <v-card
+            class="mb-12"
+            outlined
+            style="margin: 0px auto; text-align: center; width: 630px"
+          >
+            <validation-observer
+              ref="observeBankingDetails"
+              v-slot="{ invalid }"
+            >
+              <v-card-text>
+                <form @submit.prevent="validateBankingDetails">
                   <validation-provider
                     v-slot="{ errors }"
                     name="CardNumber"
@@ -170,16 +211,22 @@
                       required
                     ></v-text-field>
                   </validation-provider>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
-                  <v-btn text> Cancel </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-stepper-content>
-          </v-stepper-items>
-        </form>
-      </validation-observer>
+                </form>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn
+                  type="submit"
+                  color="primary"
+                  @click="e1 = 1"
+                  :disabled="invalid"
+                >
+                  Continue
+                </v-btn>
+              </v-card-actions>
+            </validation-observer>
+          </v-card>
+        </v-stepper-content>
+      </v-stepper-items>
     </v-stepper>
   </v-container>
 </template>
@@ -238,9 +285,16 @@ export default {
   }),
 
   methods: {
-    onSubmit() {
-      this.$refs.observer.validate();
-
+    validatePersonalDetails() {
+      this.$refs.observePersonalDetails.validate();
+    },
+    validateAddressDetails() {
+      this.$refs.observeAddressDetails.validate();
+    },
+    validateBankingDetails() {
+      this.$refs.observeBankingDetails.validate();
+    },
+    submitOrder() {
       this.$data.userId = this.$store.getters.getUserId;
       this.$data.basketId = this.$store.state.basket.basket.id;
       this.$store.dispatch("checkout", this.$data);
