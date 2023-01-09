@@ -21,12 +21,23 @@
                   v-text="n.eventPrice"
                 ></div> </v-expand-transition
             ></v-img>
+            <v-card-text class="pt-6" style="position: relative">
+              <v-btn
+                absolute
+                color="primary"
+                class="white--text"
+                fab
+                large
+                right
+                top
+                @click="showDetails(n.id)"
+              >
+                <v-icon>mdi-cart</v-icon>
+              </v-btn>
+            </v-card-text>
             <v-card-title v-text="n.eventName"></v-card-title>
             <v-card-subtitle v-text="n.artist"></v-card-subtitle>
             <v-card-actions>
-              <v-btn color="orange lighten-2" text @click="showDetails(n.id)">
-                <v-icon>mdi-cart</v-icon>
-              </v-btn>
               <v-spacer></v-spacer>
               <v-btn icon @click="n.show = !n.show">
                 <v-icon>{{
